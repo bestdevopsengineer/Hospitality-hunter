@@ -23,12 +23,24 @@ resource "aws_s3_bucket_versioning" "versioning" {
   }
 }
 
+resource "aws_kms_key" "s3_key" {
+  description             = "KMS key for S3 data platform bucket"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+
+  tags = {
+    Environment = "dev"
+    Project     = "hospitality-hunter"
+  }
+}
+
 resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
   bucket = aws_s3_bucket.data_platform_bucket.id
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      kms_master_key_id = aws_kms_key.s3_key.arn
+      sse_algorithm     = "aws:kms"
     }
   }
 }
