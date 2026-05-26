@@ -48,3 +48,8 @@ The project demonstrates fixing common S3 security findings:
 - Add Redshift resources
 - Add approval workflows
 - Add Terraform apply stage
+
+## Security Scan Note
+
+tfsec reports one remaining medium finding for access logging on the logging bucket itself.  
+For this demo project, this is accepted because the primary data bucket already sends access logs to the dedicated logging bucket.
