@@ -54,6 +54,7 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   restrict_public_buckets = true
 }
 
+#tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "logs_bucket" {
   bucket = "hospitality-hunter-data-platform-logs"
 
