@@ -21,3 +21,19 @@ jobs:
       - name: Validate SQL syntax basic check
         run: |
           grep -i "CREATE TABLE" sql/create_table.sql
+
+  terraform-validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform -chdir=terraform/dev init
+
+      - name: Terraform validate
+        run: terraform -chdir=terraform/dev validate
