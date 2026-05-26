@@ -1,0 +1,23 @@
+name: Data Platform CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check SQL files exist
+        run: |
+          ls -la sql
+          test -f sql/create_table.sql
+
+      - name: Validate SQL syntax basic check
+        run: |
+          grep -i "CREATE TABLE" sql/create_table.sql
