@@ -37,3 +37,8 @@ jobs:
 
       - name: Terraform validate
         run: terraform -chdir=terraform/dev validate
+      
+      - name: Run tfsec security scan
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          working_directory: terraform/dev
