@@ -53,3 +53,19 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+
+resource "aws_s3_bucket" "logs_bucket" {
+  bucket = "hospitality-hunter-data-platform-logs"
+
+  tags = {
+    Environment = "dev"
+    Project     = "hospitality-hunter"
+  }
+}
+
+resource "aws_s3_bucket_logging" "data_platform_logging" {
+  bucket = aws_s3_bucket.data_platform_bucket.id
+
+  target_bucket = aws_s3_bucket.logs_bucket.id
+  target_prefix = "s3-access-logs/"
+}
